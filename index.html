@@ -3,106 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TrustShield EU | Onboarding</title>
+    <title>TrustShield | Configuration</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #0d0d12; color: #ffffff; font-family: 'Inter', sans-serif; }
-        .card { background-color: #16161e; border: 1px solid #2a2a35; border-radius: 12px; }
-        .option-box { background-color: #1c1c27; border: 1px solid #333345; transition: 0.3s; cursor: pointer; }
-        .option-box:hover { border-color: #7c3aed; background-color: #252535; }
-        input[type="radio"]:checked + label { border-color: #7c3aed; background-color: #2d2d45; }
+        body { background-color: #0b0b0f; color: #ffffff; font-family: sans-serif; }
+        .card { background-color: #12121a; border: 1px solid #1f1f2e; border-radius: 12px; }
+        .input-box { background-color: #08080c; border: 1px solid #1f1f2e; width: 100%; padding: 12px; border-radius: 8px; margin-bottom: 20px; transition: 0.3s; cursor: pointer; display: flex; align-items: center; }
+        .input-box:hover { border-color: #6d28d9; }
+        input[type="radio"] { margin-right: 12px; accent-color: #6d28d9; }
     </style>
 </head>
-    <script>
-    const nextBtn = document.querySelector('button');
+<body class="flex flex-col items-center justify-center min-h-screen p-6">
 
-    nextBtn.addEventListener('click', () => {
-        // 1. Data Collect karna
-        const orgSize = document.querySelector('input[name="size"]:checked')?.id;
-        const selectedCompliance = Array.from(document.querySelectorAll('input[name="comp"]:checked'))
-                                         .map(cb => cb.id);
-
-        if (!orgSize) {
-            alert("Please select your organization size first!");
-            return;
-        }
-
-        // 2. Data ko Temporary Save karna (Browser Memory mein)
-        const userData = {
-            organizationSize: orgSize,
-            requirements: selectedCompliance,
-            timestamp: new Date().toISOString()
-        };
-        
-        localStorage.setItem('trustshield_user', JSON.stringify(userData));
-        console.log("Captured Data:", userData);
-
-        // 3. GitHub Redirect (The SaaS Bridge)
-        // Yahan aap apni GitHub App ka Client ID dalenge
-        const GITHUB_CLIENT_ID = "YOUR_CLIENT_ID"; 
-        const redirectUri = "https://your-dashboard-url.com/callback";
-        
-        // Button par "Loading" state dikhana
-        nextBtn.innerText = "Connecting to GitHub...";
-        nextBtn.style.opacity = "0.7";
-
-        // Redirecting to GitHub for Repo Access
-        window.location.href = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=repo&redirect_uri=${redirectUri}`;
-    });
-    </script>
-    
-<body class="flex flex-col items-center justify-center min-h-screen p-4">
-
-    <div class="mb-8 flex items-center space-x-2">
-        <div class="w-8 h-8 bg-purple-600 rounded-full"></div>
-        <h1 class="text-2xl font-bold tracking-tight">TrustShield <span class="text-purple-500">EU</span></h1>
+    <div class="mb-10 text-2xl font-bold flex items-center">
+        <div class="w-8 h-8 bg-purple-600 rounded-lg mr-2"></div> AWSight <span class="text-gray-500 text-sm ml-2">Compliance</span>
     </div>
 
-    <div class="card w-full max-w-lg p-8 shadow-2xl">
-        <h2 class="text-xl font-semibold mb-6">Let's configure your audit</h2>
-
-        <div class="mb-8">
-            <p class="text-gray-400 mb-4 font-medium">What is your organization size?</p>
-            <div class="space-y-3">
-                <div class="option-box p-4 rounded-lg flex items-center">
-                    <input type="radio" name="size" id="startup" class="mr-3 accent-purple-600">
-                    <label for="startup" class="w-full">Startup (1-50 employees)</label>
-                </div>
-                <div class="option-box p-4 rounded-lg flex items-center">
-                    <input type="radio" name="size" id="small" class="mr-3 accent-purple-600">
-                    <label for="small" class="w-full">Small Business (51-200 employees)</label>
-                </div>
-                <div class="option-box p-4 rounded-lg flex items-center">
-                    <input type="radio" name="size" id="enterprise" class="mr-3 accent-purple-600">
-                    <label for="enterprise" class="w-full">Large Enterprise (1,000+ employees)</label>
-                </div>
-            </div>
+    <div class="card w-full max-w-lg p-8">
+        <h3 class="text-gray-400 mb-4 font-medium">What is your organization size?</h3>
+        <div class="input-box">
+            <input type="radio" name="size" id="s1"><label for="s1">Startup (1-50 employees)</label>
+        </div>
+        <div class="input-box">
+            <input type="radio" name="size" id="s2"><label for="s2">Small Business (51-200 employees)</label>
         </div>
 
-        <div class="mb-8">
-            <p class="text-gray-400 mb-4 font-medium">Which compliance standards apply?</p>
-            <div class="space-y-3">
-                <div class="option-box p-4 rounded-lg flex items-center">
-                    <input type="checkbox" name="comp" id="gdpr" class="mr-3 accent-purple-600">
-                    <label for="gdpr" class="w-full">GDPR (Europe Data Protection)</label>
-                </div>
-                <div class="option-box p-4 rounded-lg flex items-center">
-                    <input type="checkbox" name="comp" id="soc2" class="mr-3 accent-purple-600">
-                    <label for="soc2" class="w-full">SOC 2 Type II (Security Audit)</label>
-                </div>
-                <div class="option-box p-4 rounded-lg flex items-center">
-                    <input type="checkbox" name="comp" id="hipaa" class="mr-3 accent-purple-600">
-                    <label for="hipaa" class="w-full">HIPAA / PCI DSS (Finance & Health)</label>
-                </div>
-            </div>
+        <h3 class="text-gray-400 mt-6 mb-4 font-medium">Which compliance standards apply?</h3>
+        <div class="input-box">
+            <input type="radio" name="comp" id="c1"><label for="c1">SOC 2 Type II</label>
+        </div>
+        <div class="input-box">
+            <input type="radio" name="comp" id="c2"><label for="c2">PCI DSS, HIPAA, or GDPR</label>
         </div>
 
-        <button class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-lg transition duration-300">
-            Next: Connect GitHub Repository →
+        <button onclick="goToDashboard()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-lg mt-6 transition">
+            Next →
         </button>
     </div>
 
-    <p class="text-gray-500 text-sm mt-6">Secure auditing for European Startups. 🛡️</p>
-
+    <script>
+        function goToDashboard() {
+            // Dashboard page par bhejne ke liye
+            window.location.href = "dashboard.html";
+        }
+    </script>
 </body>
 </html>
