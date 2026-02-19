@@ -13,6 +13,44 @@
         input[type="radio"]:checked + label { border-color: #7c3aed; background-color: #2d2d45; }
     </style>
 </head>
+    <script>
+    const nextBtn = document.querySelector('button');
+
+    nextBtn.addEventListener('click', () => {
+        // 1. Data Collect karna
+        const orgSize = document.querySelector('input[name="size"]:checked')?.id;
+        const selectedCompliance = Array.from(document.querySelectorAll('input[name="comp"]:checked'))
+                                         .map(cb => cb.id);
+
+        if (!orgSize) {
+            alert("Please select your organization size first!");
+            return;
+        }
+
+        // 2. Data ko Temporary Save karna (Browser Memory mein)
+        const userData = {
+            organizationSize: orgSize,
+            requirements: selectedCompliance,
+            timestamp: new Date().toISOString()
+        };
+        
+        localStorage.setItem('trustshield_user', JSON.stringify(userData));
+        console.log("Captured Data:", userData);
+
+        // 3. GitHub Redirect (The SaaS Bridge)
+        // Yahan aap apni GitHub App ka Client ID dalenge
+        const GITHUB_CLIENT_ID = "YOUR_CLIENT_ID"; 
+        const redirectUri = "https://your-dashboard-url.com/callback";
+        
+        // Button par "Loading" state dikhana
+        nextBtn.innerText = "Connecting to GitHub...";
+        nextBtn.style.opacity = "0.7";
+
+        // Redirecting to GitHub for Repo Access
+        window.location.href = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=repo&redirect_uri=${redirectUri}`;
+    });
+    </script>
+    
 <body class="flex flex-col items-center justify-center min-h-screen p-4">
 
     <div class="mb-8 flex items-center space-x-2">
