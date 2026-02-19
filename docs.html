@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation | SecuraSphere</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #020617; color: #ffffff; font-family: 'Inter', sans-serif; }
+        .glass { background: rgba(255,255,255,0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); }
+        code { background: #1e293b; padding: 2px 6px; border-radius: 4px; font-family: monospace; color: #3b82f6; }
+    </style>
+</head>
+<body class="p-6 md:p-12">
+    <div class="max-w-4xl mx-auto">
+        <nav class="mb-12 flex justify-between items-center">
+            <div class="text-xl font-black text-blue-500 italic">SECURASPHERE <span class="text-gray-600 text-xs not-italic ml-2">DOCS v1.0</span></div>
+            <a href="dashboard.html" class="text-xs bg-blue-600 px-4 py-2 rounded-lg font-bold">Back to App</a>
+        </nav>
+
+        <h1 class="text-4xl font-bold mb-8">Getting Started</h1>
+        
+        <div class="space-y-12">
+            <section>
+                <h2 class="text-2xl font-semibold mb-4 text-blue-400">1. How it works</h2>
+                <p class="text-gray-400 leading-relaxed">
+                    SecuraSphere uses an advanced scanning engine to analyze your public and private GitHub repositories. We look for patterns like <code>api_key</code>, <code>secret</code>, and <code>password</code> to ensure no sensitive data is leaked.
+                </p>
+            </section>
+
+            <section class="glass p-8 rounded-3xl">
+                <h2 class="text-2xl font-semibold mb-4 text-blue-400">2. Subscription Tiers</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+                    <div>
+                        <h3 class="font-bold mb-2 underline">Free Plan</h3>
+                        <p class="text-gray-500">Includes a basic scan and 2 vulnerability reveals to test our engine.</p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold mb-2 underline text-blue-400">Pro Plan</h3>
+                        <p class="text-gray-500">Unlocks all hidden leaks, provides exact line numbers, and gives remediation steps.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="text-2xl font-semibold mb-4 text-blue-400">3. Security & Privacy</h2>
+                <p class="text-gray-400 leading-relaxed">
+                    We do not store your code. Our scanner reads the files in real-time and only stores the metadata required to generate your 72% Readiness Score.
+                </p>
+            </section>
+        </div>
+
+        <footer class="mt-20 pt-10 border-t border-white/5 text-center text-gray-600 text-xs">
+            Need more help? <a href="contact.html" class="text-blue-500 hover:underline">Contact Support</a>
+        </footer>
+    </div>
+</body>
+</html>
