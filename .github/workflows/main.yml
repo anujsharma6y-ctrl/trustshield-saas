@@ -1,0 +1,13 @@
+name: TrustShield Compliance Scan
+on: [push] # Har naye code par apne aap chalega
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run GDPR Scanner
+        run: python scanner.py
+      - name: Deploy Result to Dashboard #
+        run: |
+          # Dashboard update karne ka logic yahan aayega
