@@ -66,3 +66,14 @@ function updateReportUI(score, secrets, risk, stars, hasEnv) {
         <li>🛡️ Recommendation: ${hasEnv ? 'Delete the .env file immediately!' : 'Everything looks solid.'}</li>
     `;
 }
+} catch (error) {
+    // Agar GitHub limit hit ho jaye
+    if (error.message.includes("403")) {
+        alert("GitHub API rate limit reached. Please try again in an hour or wait for our Pro release!");
+    } else {
+        alert("Error: Repository not found or is Private.");
+    }
+    this.innerHTML = "Start Deep Scan";
+    this.disabled = false;
+}
+
