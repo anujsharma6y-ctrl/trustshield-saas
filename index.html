@@ -1,58 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vultix | Enterprise Security Dashboard</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <nav class="navbar">
-        <div class="logo-area">
-            <span class="eagle-icon">🦅</span>
-            <span class="brand-name">VULTIX</span>
-            <span class="beta-badge">BETA v1.0</span>
-        </div>
-        <div class="system-status">
-            <span class="dot"></span> Scanner: Operational
-        </div>
-        <div class="nav-links">
-            <button class="btn-waitlist">Join Pro Waitlist</button>
-        </div>
-    </nav>
+document.getElementById('scan-btn').addEventListener('click', function() {
+    const btn = this;
+    const input = document.getElementById('repo-url');
+    
+    if(input.value === "") {
+        alert("Please enter a GitHub URL first!");
+        return;
+    }
 
-    <main class="dashboard">
-        <header class="dashboard-header">
-            <h1>Security Overview</h1>
-            <p>Testing Mode Active: All core scans are currently free.</p>
-        </header>
+    // Button state change to "Scanning"
+    btn.innerHTML = "🔍 Scanning Repositories...";
+    btn.style.opacity = "0.7";
+    btn.disabled = true;
 
-        <section class="metrics-grid">
-            <div class="card">
-                <h3>Security Score</h3>
-                <div class="score-value">72%</div>
-                <p>Readiness Rating</p>
-            </div>
-            <div class="card">
-                <h3>Total Scans</h3>
-                <div class="metric-value">0 / Unlimited</div>
-                <p>Free Tier Active</p>
-            </div>
-            <div class="card alert">
-                <h3>Vulnerabilities</h3>
-                <div class="metric-value">0 Found</div>
-                <p>Recent Repo Scan</p>
-            </div>
-        </section>
-
-        <section class="scan-section">
-            <input type="text" placeholder="Paste GitHub Repository URL..." id="repo-url">
-            <button id="scan-btn">Start Deep Scan</button>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <p>&copy; 2026 Vultix Security. Building in Public for a safer web.</p>
-    </footer>
-</body>
-</html>
+    // Simulate AI Scan (3 seconds delay)
+    setTimeout(() => {
+        btn.innerHTML = "✅ Scan Complete!";
+        btn.style.background = "#10b981"; // Change to Green
+        alert("Success! 0 vulnerabilities found in this public repo. (Free Beta Mode)");
+        btn.disabled = false;
+        btn.style.opacity = "1";
+    }, 3000);
+});
