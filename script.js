@@ -1,70 +1,63 @@
-let currentTool = 'full_audit';
+let currentTool = 'dashboard';
 
-// Tool Selection Logic
-function selectTool(toolName, element) {
-    currentTool = toolName;
-    
-    // UI Update: Active Class
+// Sidebar selection logic
+function selectTool(tool, element) {
+    currentTool = tool;
     document.querySelectorAll('.side-nav a').forEach(a => a.classList.remove('active'));
     element.classList.add('active');
     
-    // Content Update based on selection
-    const config = {
-        'full_audit': { title: "Infrastructure Health Overview", desc: "Full SOC2 & GDPR mapping." },
-        'secret_scan': { title: "Secret Leak Detection", desc: "Scanning for .env and API Keys." },
-        'prowler': { title: "Prowler Security Audit", desc: "AWS Best Practices Benchmark." },
-        'vulnerability': { title: "Vulnerability Assessment", desc: "Checking for known exploits." }
+    const titles = {
+        'dashboard': 'Infrastructure Health Overview',
+        'secrets': 'Secret & Key Leak Scanner',
+        'compliance': 'SOC2 / GDPR Compliance Audit',
+        'blast-radius': 'Attack Blast Radius Map'
     };
-    
-    document.getElementById('tool-title').innerText = config[toolName].title;
-    document.getElementById('tool-desc').innerText = config[toolName].desc;
-    document.getElementById('current-tool-display').innerText = config[toolName].title;
+    document.getElementById('main-title').innerText = titles[tool];
 }
 
-document.getElementById('scan-btn').onclick = async function() {
+document.getElementById('scan-btn').onclick = function() {
     const url = document.getElementById('repo-url').value;
     if(!url) { alert("Please enter a URL first"); return; }
 
-    this.innerHTML = `🔍 Running ${currentTool}...`;
+    this.innerHTML = "🔍 Scanning Assets...";
     this.disabled = true;
 
-    // Simulating API call for Day 2
+    // Simulate Scan Delay
     setTimeout(() => {
-        let score = Math.floor(Math.random() * (98 - 70) + 70);
-        let findings = Math.floor(Math.random() * 5);
-        
+        let score = Math.floor(Math.random() * (95 - 60) + 60);
+        let findings = Math.floor(Math.random() * 8);
+
         document.getElementById('main-score').innerText = score + "%";
         document.getElementById('vuln-count').innerText = findings;
         
-        displayResults(currentTool, findings);
+        showResults(currentTool, findings);
         
         document.getElementById('security-report').style.display = 'block';
         this.innerHTML = "Run Audit";
         this.disabled = false;
-        
         window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-    }, 2000);
+    }, 1500);
 };
 
-function displayResults(tool, count) {
+function showResults(tool, count) {
     const list = document.getElementById('report-details-list');
-    const status = count > 0 ? "FAIL" : "PASS";
-    
-    // Result Templates based on Tool
-    const results = {
-        'full_audit': `Audit completed. System health is ${status}.`,
-        'secret_scan': count > 0 ? `Found ${count} sensitive files (.env/config).` : "No secrets leaked.",
-        'prowler': "AWS CIS Benchmarks verified.",
-        'vulnerability': "No critical vulnerabilities detected in root."
-    };
+    let html = "";
 
-    list.innerHTML = `
-        <div class="compliance-row ${status.toLowerCase()}">
-            <div>
-                <strong>${tool.toUpperCase()} Report</strong>
-                <p style="font-size: 0.85rem; color: #64748b; margin-top:5px;">${results[tool]}</p>
-            </div>
-            <div class="check-status">${status}</div>
-        </div>
-    `;
+    if(tool === 'secrets') {
+        html = `<div class="compliance-row ${count > 0 ? 'fail' : 'pass'}">
+            <div><strong>Leak Check</strong><p>Found ${count} potentially exposed credentials in source code.</p></div>
+            <div class="check-status">${count > 0 ? 'FAIL' : 'PASS'}</div>
+        </div>`;
+    } else if(tool === 'blast-radius') {
+        html = `<div class="compliance-row pass">
+            <div><strong>Blast Radius Mapping</strong><p>Interactive graph generated. 3 high-risk paths identified.</p></div>
+            <div class="check-status">COMPLETE</div>
+        </div>`;
+    } else {
+        html = `<div class="compliance-row pass">
+            <div><strong>General Audit</strong><p>Security posture is stable. No critical zero-day exploits found.</p></div>
+            <div class="check-status">PASS</div>
+        </div>`;
+    }
+    list.innerHTML = html;
 }
