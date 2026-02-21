@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vultix | Cloud-Native Security Audit</title>
+    <title>Vultix | Multi-Tool Security Audit</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -15,27 +15,27 @@
                 <span class="logo-text">VULTIX</span>
             </div>
             <nav class="side-nav">
-                <a href="#" class="active"><i class="fas fa-th-large"></i> Dashboard</a>
-                <a href="#"><i class="fas fa-shield-alt"></i> Compliance</a>
-                <a href="#"><i class="fas fa-history"></i> Scan History</a>
-                <a href="#"><i class="fas fa-cog"></i> Settings</a>
+                <a href="#" class="active" onclick="selectTool('full_audit', this)"><i class="fas fa-th-large"></i> Full Audit</a>
+                <a href="#" onclick="selectTool('secret_scan', this)"><i class="fas fa-key"></i> Secret Scanner</a>
+                <a href="#" onclick="selectTool('prowler', this)"><i class="fas fa-cloud-sun"></i> Prowler Audit</a>
+                <a href="#" onclick="selectTool('vulnerability', this)"><i class="fas fa-bug"></i> Vulnerability</a>
             </nav>
-            <div class="pro-badge">PRO WAITLIST</div>
+            <div class="pro-tag">FREE BETA</div>
         </aside>
 
         <main class="main-content">
             <header class="top-header">
                 <div class="status-indicator"><span class="pulse"></span> System Operational</div>
-                <div class="user-profile"><i class="fas fa-user-circle"></i> Guest Developer</div>
+                <div class="user-profile"><i class="fas fa-user-circle"></i> Guest Admin</div>
             </header>
 
             <section class="dashboard-hero">
                 <div class="hero-text">
-                    <h1>Infrastructure Health Overview</h1>
-                    <p>Automated security assessment for GitHub Assets.</p>
+                    <h1 id="tool-title">Infrastructure Health Overview</h1>
+                    <p id="tool-desc">Comprehensive security assessment for your cloud assets.</p>
                 </div>
                 <div class="search-bar">
-                    <input type="text" id="repo-url" placeholder="Paste GitHub Repository URL...">
+                    <input type="text" id="repo-url" placeholder="Enter Target URL (GitHub/Web)...">
                     <button id="scan-btn">Run Audit</button>
                 </div>
             </section>
@@ -44,22 +44,19 @@
                 <div class="stat-card">
                     <span class="label">Compliance Score</span>
                     <div class="value" id="main-score">--%</div>
-                    <div class="sub-label">Based on SOC2/GDPR</div>
                 </div>
                 <div class="stat-card">
                     <span class="label">Total Findings</span>
                     <div class="value red" id="vuln-count">0</div>
-                    <div class="sub-label">Critical Issues Found</div>
                 </div>
                 <div class="stat-card">
-                    <span class="label">Scan Depth</span>
-                    <div class="value">Deep</div>
-                    <div class="sub-label">Real-time Analysis</div>
+                    <span class="label">Tool Selected</span>
+                    <div class="value" style="font-size: 1.2rem; margin-top: 15px;" id="current-tool-display">Full Audit</div>
                 </div>
             </section>
 
             <div id="security-report" class="awsight-report" style="display:none;">
-                <h3><i class="fas fa-file-contract"></i> Audit Summary & Compliance Checklist</h3>
+                <h3><i class="fas fa-file-contract"></i> Audit Summary</h3>
                 <div id="report-details-list"></div>
             </div>
         </main>
