@@ -1,72 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vultix | Advanced Security Dashboard</title>
+    <meta charset="UTF-8"><title>Vultix | Cloud Security Hub</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="app-wrapper">
         <aside class="sidebar">
-            <div class="logo-box">
-                <span class="logo-icon">🦅</span>
-                <span class="logo-text">VULTIX</span>
-            </div>
-            <nav class="side-nav">
-                <a href="#" class="active" onclick="selectTool('dashboard', this)"><i class="fas fa-th-large"></i> Dashboard</a>
-                <a href="#" onclick="selectTool('secrets', this)"><i class="fas fa-key"></i> Secret Scanner</a>
+            <div class="logo">🦅 VULTIX</div>
+            <nav>
+                <a href="#" class="active" onclick="selectTool('dashboard', this)"><i class="fas fa-shield-alt"></i> Dashboard</a>
                 <a href="#" onclick="selectTool('blast-radius', this)"><i class="fas fa-project-diagram"></i> Blast Radius</a>
-                <a href="#" onclick="selectTool('threat-lab', this)"><i class="fas fa-vial"></i> Threat Lab</a>
             </nav>
-            <div class="pro-tag">DAY 3 LIVE</div>
+            <div class="domain-tag">vultix.yourdomain.com</div>
         </aside>
-
         <main class="main-content">
-            <header class="top-header">
-                <div class="status-indicator"><span class="pulse"></span> Cloud Monitoring Active</div>
-                <div class="user-profile"><i class="fas fa-user-circle"></i> Admin Mode</div>
-            </header>
-
-            <section class="dashboard-hero">
-                <div class="hero-text">
-                    <h1 id="main-title">Infrastructure Health Overview</h1>
-                    <p id="sub-title">Simulating attack vectors and cloud misconfigurations.</p>
-                </div>
-                <div class="search-bar">
-                    <input type="text" id="repo-url" placeholder="Paste Target URL or GitHub Repo...">
-                    <button id="scan-btn">Launch Security Audit</button>
-                </div>
-            </section>
-
-            <section class="stats-grid">
-                <div class="stat-card">
-                    <span class="label">Risk Exposure</span>
-                    <div class="value" id="main-score">--%</div>
-                    <div class="sub-label">Health Index</div>
-                </div>
-                <div class="stat-card">
-                    <span class="label">Critical Findings</span>
-                    <div class="value red" id="vuln-count">0</div>
-                    <div class="sub-label">Action Required</div>
-                </div>
-                <div class="stat-card">
-                    <span class="label">Audit Status</span>
-                    <div class="value green" style="font-size: 1.5rem; margin-top: 10px;">Verified</div>
-                    <div class="sub-label">Compliance SOC2</div>
-                </div>
-            </section>
-
-            <div id="blast-radius-container" class="awsight-report" style="display:none; margin-top: 25px;">
-                <h3><i class="fas fa-network-wired"></i> Attack Blast Radius Map</h3>
-                <div id="visual-map" class="map-bg">
-                    </div>
+            <header><h1>Infrastructure Audit</h1></header>
+            <div class="stats-grid">
+                <div class="stat-card">Risk Score: <span id="v-score">--</span></div>
+                <div class="stat-card">Critical Issues: <span id="v-vuln" class="red">0</span></div>
             </div>
-
-            <div id="security-report" class="awsight-report" style="display:none;">
-                <h3 id="report-title"><i class="fas fa-file-contract"></i> Audit Intelligence</h3>
-                <div id="report-details-list"></div>
+            <div class="action-bar">
+                <input type="text" id="target-url" placeholder="Enter Repo URL...">
+                <button id="v-scan-btn" class="btn-primary">Launch Active Scan</button>
+            </div>
+            <div id="v-terminal" class="terminal-window" style="display:none;"></div>
+            <div id="v-map-box" class="visual-box" style="display:none;">
+                <h3>Attack Blast Radius Map</h3>
+                <div id="v-map" class="map-canvas"></div>
             </div>
         </main>
     </div>
