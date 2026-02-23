@@ -3,46 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vultix | Infrastructure Audit</title>
+    <title>Vultix | Live Infrastructure Audit</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div class="app-container">
+    <div class="dashboard-wrapper">
         <aside class="sidebar">
-            <div class="brand">🦅 VULTIX</div>
-            <nav class="nav-menu">
+            <div class="logo">🦅 VULTIX</div>
+            <nav class="side-links">
                 <a href="#" class="active"><i class="fas fa-shield-alt"></i> Dashboard</a>
                 <a href="#"><i class="fas fa-project-diagram"></i> Blast Radius</a>
+                <a href="#"><i class="fas fa-bell"></i> Alerts</a>
             </nav>
-            <div class="domain-footer">vultix.yourdomain.com</div>
+            <div class="live-status-box">
+                <span class="pulse-dot"></span> System Live
+            </div>
+            <div class="domain-info">vultix.yourdomain.com</div>
         </aside>
 
-        <main class="main-content">
-            <header class="page-header">
-                <h1>Infrastructure Audit</h1>
-            </header>
+        <main class="main-panel">
+            <h1 class="page-title">Infrastructure Audit</h1>
 
-            <div class="stats-container">
+            <div class="stats-grid">
                 <div class="stat-card">
-                    <span class="stat-label">Risk Score:</span>
-                    <span id="v-score" class="stat-value">--</span>
+                    <p class="label">Risk Score</p>
+                    <span id="v-score">--</span>
                 </div>
                 <div class="stat-card">
-                    <span class="stat-label">Critical Issues:</span>
-                    <span id="v-vuln" class="stat-value">0</span>
+                    <p class="label">Critical Issues</p>
+                    <span id="v-vuln">0</span>
                 </div>
             </div>
 
-            <div class="audit-actions">
-                <input type="text" id="repo-input" placeholder="Enter Repo URL...">
-                <button id="scan-btn">Launch Active Scan</button>
+            <div class="audit-input-group">
+                <input type="text" id="repo-url" placeholder="Enter Repo URL (https://github.com/...)">
+                <button id="v-scan-btn">Launch Active Scan</button>
             </div>
 
-            <div class="map-section">
-                <h3>Attack Blast Radius Map</h3>
-                <div id="v-map" class="map-canvas">
-                    </div>
+            <div class="monitor-grid">
+                <div class="map-section">
+                    <h3>Attack Blast Radius Map</h3>
+                    <div id="v-map" class="map-placeholder">Waiting for scan...</div>
+                </div>
+
+                <div class="threat-feed">
+                    <h3><i class="fas fa-stream"></i> Real-time Threat Feed</h3>
+                    <div id="threat-list" class="feed-box">
+                        </div>
+                </div>
             </div>
         </main>
     </div>
