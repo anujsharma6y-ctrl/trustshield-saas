@@ -1,28 +1,47 @@
-const logs = ["> Initializing scan...", "> Fetching IAM policies...", "> Checking S3 bucket ACLs...", "> ANALYSIS COMPLETE."];
+const threatDatabase = [
+    "Blocked suspicious IP: 185.12.34.9",
+    "CRITICAL: Exposed AWS Access Key found",
+    "Security Group 'Prod-DB' modified",
+    "New IAM user created: 'temp_admin'",
+    "Anomaly: High outbound traffic detected"
+];
 
-function selectTool(tool, el) {
-    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-    el.classList.add('active');
-    document.getElementById('v-map-box').style.display = (tool === 'blast-radius') ? 'block' : 'none';
+// 1. Live Threat Feed Logic
+function runThreatFeed() {
+    const feed = document.getElementById('threat-list');
+    setInterval(() => {
+        const log = threatDatabase[Math.floor(Math.random() * threatDatabase.length)];
+        const time = new Date().toLocaleTimeString();
+        const div = document.createElement('div');
+        div.className = "feed-item";
+        div.innerHTML = `[${time}] <span class="${log.includes('CRITICAL') ? 'crit-log' : ''}">${log}</span>`;
+        feed.prepend(div);
+        if(feed.children.length > 6) feed.lastChild.remove();
+    }, 4000);
 }
 
+// 2. Scan Button Logic
 document.getElementById('v-scan-btn').onclick = function() {
-    const term = document.getElementById('v-terminal');
-    term.style.display = 'block';
-    term.innerHTML = '';
-    let i = 0;
-    
-    const interval = setInterval(() => {
-        if(i < logs.length) {
-            term.innerHTML += logs[i] + "<br>";
-            i++;
-        } else {
-            clearInterval(interval);
-            document.getElementById('v-score').innerText = "24%";
-            document.getElementById('v-vuln').innerText = "7 Issues";
-            if(document.getElementById('v-map-box').style.display === 'block') {
-                document.getElementById('v-map').innerHTML = '<div class="node red">API Gateway</div> → <div class="node">DB Access</div>';
-            }
-        }
-    }, 600);
+    const url = document.getElementById('repo-url').value;
+    if(!url) { alert("Please enter a valid URL!"); return; }
+
+    this.innerText = "🔍 Auditing Infra...";
+    this.disabled = true;
+
+    setTimeout(() => {
+        document.getElementById('v-score').innerText = "32%";
+        document.getElementById('v-vuln').innerText = "5 High";
+        document.getElementById('v-vuln').style.color = "#ef4444";
+        
+        document.getElementById('v-map').innerHTML = `
+            <div style="padding:20px; text-align:center;">
+                <i class="fas fa-check-circle" style="color:#10b981; font-size:2rem;"></i>
+                <p>Scan Finished. <br> Attack Path: <b>EC2 -> Public Gateway -> Data Leak</b></p>
+            </div>`;
+        
+        this.innerText = "Re-Launch Scan";
+        this.disabled = false;
+    }, 2500);
 };
+
+window.onload = runThreatFeed;
